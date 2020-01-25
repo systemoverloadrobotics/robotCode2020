@@ -7,9 +7,16 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkMax;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import com.ctre.phoenix.motorcontrol.*;
+import com.revrobotics.CANSparkMax;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,8 +26,17 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+WPI_TalonSRX motor1 = new WPI_TalonSRX(1);
+DigitalInput forwardlimit = new DigitalInput(2);
+DigitalInput reverselimit = new DigitalInput(3);
   private RobotContainer m_robotContainer;
+//set motors to 15/18 of max power for desired speed
+  CANSparkMax kingmotor1 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
+  CANSparkMax kingmotor2 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
+  CANSparkMax kingmotor3 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
+  CANSparkMax kingmotor4 = new CANSparkMax(7, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -82,6 +98,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    teleopInitElevator();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -91,11 +109,30 @@ public class Robot extends TimedRobot {
     }
   }
 
+  public void teleopInitElevator() {
+    motor1.configFactoryDefault();
+    motor1.configForwardLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX,LimitSwitchNormal.NormallyClosed, 1);
+    motor1.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX,LimitSwitchNormal.NormallyOpen,1);
+  }
+
+  public void teleopPeriodicElevator() {
+    if(motor1.isFwdLimitSwitchClosed() == 0){
+      motor1.set(ControlMode.PercentOutput, 0.2);
+    }
+    else if(motor1.isRevLimitSwitchClosed() == 0){
+      motor1.set(ControlMode.PercentOutput, -0.2);
+    }
+    else{
+
+    }
+  }
+
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
+    teleopPeriodicElevator();
   }
 
   @Override
