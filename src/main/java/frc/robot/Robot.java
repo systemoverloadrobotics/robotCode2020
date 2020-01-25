@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import com.ctre.phoenix.motorcontrol.*;
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
