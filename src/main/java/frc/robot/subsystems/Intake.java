@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 public class Intake extends SubsystemBase {
 
     WPI_VictorSPX shootWheel = new WPI_VictorSPX(1);
+    public static final boolean MakeCrandallWorkAgain = true;
 
     public Intake(){
 
