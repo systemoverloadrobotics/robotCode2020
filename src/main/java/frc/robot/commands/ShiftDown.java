@@ -17,6 +17,6 @@ public class ShiftDown extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
