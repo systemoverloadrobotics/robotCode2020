@@ -24,12 +24,6 @@ public class DriveTrain extends SubsystemBase {
     private CANSparkMax leftFollower1 = new CANSparkMax(DRIVE.LEFT_FOLLOWER_1_ID, MotorType.kBrushless);
     private CANSparkMax leftFollower2 = new CANSparkMax(DRIVE.LEFT_FOLLOWER_2_ID, MotorType.kBrushless);
 
-    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = limelight.getEntry("tx");
-    NetworkTableEntry ty = limelight.getEntry("ty");
-    NetworkTableEntry ta = limelight.getEntry("ta");
-    //NetworkTableEntry piper = limelight.getEntry("getpipe").getDouble(0);
-
 
     private CANEncoder leftMasterEncoder = new CANEncoder(leftMaster, EncoderType.kQuadrature, 4069);
     private CANEncoder rightMasterEncoder = new CANEncoder(rightMaster, EncoderType.kQuadrature, 4069);
@@ -68,15 +62,6 @@ public class DriveTrain extends SubsystemBase {
         m_compressor.stop();
     }
 
-    public double getYaw() {
-        double x;
-        return x = tx.getDouble(0.0);
-    }
-
-    public double getDistance() {
-        double y;
-        return y = ty.getDouble(0.0);
-    }
 
     public double getLeftMasterEncoderValue() {
         return leftMasterEncoder.getPosition();
